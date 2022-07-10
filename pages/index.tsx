@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 declare function diffString(oldText: string, newText: string): string;
 
 const Home: NextPage = () => {
-  const [oldText, setOldText] = useState("old text");
-  const [newText, setNewText] = useState("new text");
+  const [oldText, setOldText] = useState("Put the original text here.");
+  const [newText, setNewText] = useState("Put the modified text here.");
   const [diffHtml, setDiffHtml] = useState("");
 
   useEffect(() => {
@@ -82,6 +82,16 @@ const Home: NextPage = () => {
             rel="noopener noreferrer"
           >
             Vercel
+          </a>
+        </div>
+        <div>
+          Diff algorithm by{" "}
+          <a
+            href="https://johnresig.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            John Resig
           </a>
         </div>
       </footer>
