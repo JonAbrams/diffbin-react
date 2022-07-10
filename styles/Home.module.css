@@ -3,18 +3,58 @@
 }
 
 .main {
-  min-height: 100vh;
+  min-height: calc(100vh - 84px);
   padding: 4rem 0;
-  flex: 1;
+}
+
+.title {
   display: flex;
   justify-content: center;
 }
 
 .footer {
   display: flex;
-  flex: 1;
+  flex-direction: column;
   padding: 2rem 0;
   border-top: 1px solid #eaeaea;
   justify-content: center;
   align-items: center;
+}
+
+.textAreas {
+  margin-right: -16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.oldText, .newText {
+  height: 300px;
+  width: 100%;
+  max-width: 500px;
+  margin-right: 16px;
+  margin-bottom: 16px;
+  resize: none;
+  padding: 8px;
+}
+
+.diffContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.diffText {
+  background-color: #eee;
+  max-width: 500px;
+  padding: 8px;
+  white-space: normal;
+  width: 100%;
+}
+
+.diffText del {
+  color: red;
+}
+
+.diffText ins {
+  color: green;
 }

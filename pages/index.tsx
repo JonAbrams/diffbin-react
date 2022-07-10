@@ -1,25 +1,27 @@
 import type { NextPage } from 'next'
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 declare function diffString(oldText: string, newText: string): string;
 
 const Home: NextPage = () => {
-  const [oldText, setOldText] = useState("");
-  const [newText, setNewText] = useState("");
+  const [oldText, setOldText] = useState("old text");
+  const [newText, setNewText] = useState("new text");
   const [diffHtml, setDiffHtml] = useState("");
+
+  useEffect(() => {
+    setDiffHtml(diffString(oldText, newText));
+  }, [oldText, newText]);
 
   function handleOldTextChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
     const oldText = event.target!.value;
     setOldText(oldText);
-    setDiffHtml(diffString(oldText, newText));
   }
 
   function handleNewTextChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
     const newText = event.target!.value;
     setNewText(newText);
-    setDiffHtml(diffString(oldText, newText));
   }
 
   return (
@@ -27,26 +29,38 @@ const Home: NextPage = () => {
       <Head>
         <title>Diffbin - Compare changes between text revisions</title>
         <meta name="description" content="Easy and free text comparisons" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0"
+        ></meta>
         <link rel="icon" href="/favicon.ico" />
         <script defer src="/jsdiff.js"></script>
       </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>Diffbin</h1>
-        <textarea
-          className={styles.oldText}
-          value={oldText}
-          onChange={handleOldTextChange}
-        ></textarea>
-        <textarea
-          className={styles.newText}
-          value={newText}
-          onChange={handleNewTextChange}
-        ></textarea>
-        <pre
-          className={styles.diffText}
-          dangerouslySetInnerHTML={{ __html: diffHtml }}
-        ></pre>
+        <div className={styles.textAreas}>
+          <textarea
+            placeholder="Old text goes here…"
+            className={styles.oldText}
+            value={oldText}
+            onChange={handleOldTextChange}
+          ></textarea>
+          <textarea
+            placeholder="New text goes here…"
+            className={styles.newText}
+            value={newText}
+            onChange={handleNewTextChange}
+          ></textarea>
+        </div>
+        {diffHtml && (
+          <div className={styles.diffContainer}>
+            <pre
+              className={styles.diffText}
+              dangerouslySetInnerHTML={{ __html: diffHtml }}
+            ></pre>
+          </div>
+        )}
       </main>
 
       <footer className={styles.footer}>
@@ -58,6 +72,16 @@ const Home: NextPage = () => {
             rel="noopener noreferrer"
           >
             Jon Abrams
+          </a>
+        </div>
+        <div>
+          Hosted for free by{" "}
+          <a
+            href="https://vercel.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Vercel
           </a>
         </div>
       </footer>
