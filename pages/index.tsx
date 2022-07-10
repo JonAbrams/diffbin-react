@@ -1,14 +1,19 @@
 import type { NextPage } from 'next'
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 declare function diffString(oldText: string, newText: string): string;
 
+const defaultOldText = "Put the original text here.";
+const defaultNewText = "Put the modified text here.";
+
 const Home: NextPage = () => {
-  const [oldText, setOldText] = useState("Put the original text here.");
-  const [newText, setNewText] = useState("Put the modified text here.");
+  const [oldText, setOldText] = useState(defaultOldText);
+  const [newText, setNewText] = useState(defaultNewText);
   const [diffHtml, setDiffHtml] = useState("");
+  const oldTextEl = useRef(null);
+  const newTextEl = useRef(null);
 
   useEffect(() => {
     setDiffHtml(diffString(oldText, newText));
@@ -22,6 +27,18 @@ const Home: NextPage = () => {
   function handleNewTextChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
     const newText = event.target!.value;
     setNewText(newText);
+  }
+
+  function handleOldTextFocus() {
+    if (oldText === defaultOldText) {
+      (oldTextEl?.current as unknown as HTMLTextAreaElement).select();
+    }
+  }
+
+  function handleNewTextFocus() {
+    if (newText === defaultNewText) {
+      (newTextEl?.current as unknown as HTMLTextAreaElement).select();
+    }
   }
 
   return (
@@ -45,12 +62,16 @@ const Home: NextPage = () => {
             className={styles.oldText}
             value={oldText}
             onChange={handleOldTextChange}
+            onFocus={handleOldTextFocus}
+            ref={oldTextEl}
           ></textarea>
           <textarea
             placeholder="New text goes here…"
             className={styles.newText}
             value={newText}
             onChange={handleNewTextChange}
+            onFocus={handleNewTextFocus}
+            ref={newTextEl}
           ></textarea>
         </div>
         {diffHtml && (
