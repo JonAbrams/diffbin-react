@@ -1,4 +1,4 @@
-import type { NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { useEffect, useRef, useState } from "react";
@@ -16,7 +16,27 @@ const Home: NextPage = () => {
   const newTextEl = useRef(null);
 
   useEffect(() => {
+    const oldHash = location.hash.split("&")[0].slice(1);
+    const newHash = location.hash.split("&")[1];
+    if (oldHash && newHash) {
+      setOldText(decodeURIComponent(oldHash));
+      setNewText(decodeURIComponent(newHash));
+    }
+  }, []);
+
+  useEffect(() => {
     setDiffHtml(diffString(oldText, newText));
+    if (
+      oldText &&
+      newText &&
+      oldText !== defaultOldText &&
+      newText !== defaultNewText
+    ) {
+      location.hash =
+        encodeURIComponent(oldText) + "&" + encodeURIComponent(newText);
+    } else {
+      history.replaceState(null, "", "/");
+    }
   }, [oldText, newText]);
 
   function handleOldTextChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
@@ -120,4 +140,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home
+export default Home;
