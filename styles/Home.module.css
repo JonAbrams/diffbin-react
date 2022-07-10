@@ -4,7 +4,7 @@
 
 .main {
   min-height: calc(100vh - 84px);
-  padding: 4rem 0;
+  padding-bottom: 4rem;
 }
 
 .title {
@@ -22,7 +22,7 @@
 }
 
 .textAreas {
-  margin-right: -16px;
+  margin-right: -1rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -32,10 +32,10 @@
   height: 300px;
   width: 100%;
   max-width: 500px;
-  margin-right: 16px;
-  margin-bottom: 16px;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
   resize: none;
-  padding: 8px;
+  padding: 1rem;
 }
 
 .diffContainer {
@@ -44,9 +44,10 @@
 }
 
 .diffText {
+  margin: 0;
   background-color: #eee;
   max-width: 500px;
-  padding: 8px;
+  padding: 1rem;
   white-space: normal;
   width: 100%;
 }
