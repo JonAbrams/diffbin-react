@@ -40,6 +40,7 @@
   margin-bottom: 1rem;
   resize: none;
   padding: 1rem;
+  font-size: 16px;
 }
 
 .diffContainer {
@@ -54,6 +55,7 @@
   padding: 1rem;
   white-space: normal;
   width: 100%;
+  font-size: 16px;
 }
 
 .diffText del {
